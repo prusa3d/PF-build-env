@@ -22,6 +22,7 @@ void setup() {
   Serial.begin(115200);
   // Initialize Circuit Playground library.
   CircuitPlayground.begin();
+  CircuitPlayground.strip.setBrightness(255);
 }
 
 void loop() {
@@ -51,6 +52,10 @@ void loop() {
     Serial.print(green, DEC);
     Serial.print(" blue=");
     Serial.println(blue, DEC);
+    // Gamma correction makes LED brightness appear more linear
+    red   = CircuitPlayground.gamma8(red);
+    green = CircuitPlayground.gamma8(green);
+    blue  = CircuitPlayground.gamma8(blue);
     // Finally set all the pixels to the detected color.
     for (int i=0; i<10; ++i) {
       CircuitPlayground.strip.setPixelColor(i, red, green, blue);
